@@ -109,69 +109,70 @@ export const CartAfter = () => {
   };
 
   return (
-    <div className="flex flex-col items-center mt-2 px-4 sm:px-6">
-      <div className="w-full max-w-[500px] min-h-[500px]">
-        <h1 className="text-xl sm:text-2xl font-caveat font-semibold mb-5 text-left">
-          {" "}
-          ПОЛУЧАТЕЛЬ
-        </h1>
-        <form
-          onSubmit={handleSubmit}
-          className="flex flex-col gap-5 items-center w-full"
-        >
-          <InputH
-            title="ФИО"
-            value={formData.full_name}
-            onChange={(e) =>
-              setFormData({ ...formData, full_name: e.target.value })
-            }
-          />
+    <div className="flex flex-col items-center mt-8 px-4 sm:px-6">
+      <div className="w-full max-w-[700px]">
+        <div className="flex flex-col">
+          <h1 className="text-xl sm:text-2xl font-caveat italic font-semibold mb-6 text-left">
+            ПОЛУЧАТЕЛЬ
+          </h1>
 
-          <InputH
-            title="СТРАНА"
-            value={formData.country}
-            onChange={(e) =>
-              setFormData({ ...formData, country: e.target.value })
-            }
-          />
+          <div className="self-center flex flex-col items-center w-full max-w-[380px]">
+            <form className="flex flex-col gap-4 w-full">
+              <InputH
+                title="ФИО"
+                value={formData.full_name}
+                onChange={(e) =>
+                  setFormData({ ...formData, full_name: e.target.value })
+                }
+              />
 
-          <InputH
-            title="АДРЕС"
-            value={formData.address}
-            onChange={(e) =>
-              setFormData({ ...formData, address: e.target.value })
-            }
-          />
+              <InputH
+                title="СТРАНА"
+                value={formData.country}
+                onChange={(e) =>
+                  setFormData({ ...formData, country: e.target.value })
+                }
+              />
 
-          <InputH
-            title="ПОЧТОВЫЙ ИНДЕКС"
-            value={formData.postal_code}
-            onChange={(e) =>
-              setFormData({ ...formData, postal_code: e.target.value })
-            }
-            maxLength={6}
-          />
+              <InputH
+                title="АДРЕС"
+                value={formData.address}
+                onChange={(e) =>
+                  setFormData({ ...formData, address: e.target.value })
+                }
+              />
 
-          <InputH
-            title="ТЕЛЕФОН"
-            value={formData.phone}
-            onChange={handlePhoneChange}
-            maxLength={12}
-          />
+              <InputH
+                title="ПОЧТОВЫЙ ИНДЕКС"
+                value={formData.postal_code}
+                onChange={(e) =>
+                  setFormData({ ...formData, postal_code: e.target.value })
+                }
+                maxLength={6}
+              />
 
-          <button
-            type="submit"
-            disabled={loading}
-            className={`w-full sm:w-52 h-12 border-2 rounded-full text-xl font-alegreya mx-auto mt-4
-              ${
-                loading
-                  ? "bg-gray-300 cursor-not-allowed"
-                  : "border-black hover:bg-[#9F3A3A] hover:text-white"
-              }`}
-          >
-            {loading ? "Обработка..." : "ОФОРМИТЬ ЗАКАЗ"}
-          </button>
-        </form>
+              <InputH
+                title="ТЕЛЕФОН"
+                value={formData.phone}
+                onChange={handlePhoneChange}
+                maxLength={12}
+              />
+            </form>
+
+            <button
+              onClick={handleSubmit}
+              disabled={loading}
+              className={`w-60 h-12 border-2 rounded-full text-lg font-alegreya mt-10
+                ${
+                  loading
+                    ? "bg-gray-300 cursor-not-allowed"
+                    : "border-black hover:bg-[#9F3A3A] hover:text-white transition-all"
+                }`}
+            >
+              {loading ? "Обработка..." : "ОФОРМИТЬ ЗАКАЗ"}
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

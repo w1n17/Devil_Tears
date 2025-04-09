@@ -120,13 +120,15 @@ export const Cart = () => {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center mt-12 font-alegreya">
-      <div className="border-2 border-black rounded-3xl w-[1000px] min-h-[500px] p-6">
-        <h1 className="text-xl font-bold mt-4 font-caveat">Корзина</h1>
+    <div className="flex flex-col justify-center items-center font-alegreya w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="border-2 border-black rounded-3xl w-full max-w-5xl min-h-[500px] p-4 sm:p-6">
+        <h1 className="text-xl sm:text-2xl font-bold mt-4 font-caveat">
+          Корзина
+        </h1>
 
         {cartItems.length > 0 ? (
           <div className="flex flex-col gap-4 mt-4">
-            <div className="grid grid-cols-6 gap-4 items-center pb-2">
+            <div className="hidden sm:grid sm:grid-cols-6 gap-4 items-center pb-2">
               <div className="col-span-2">Товар</div>
               <div className="text-center">Размер</div>
               <div className="text-center">Количество</div>
@@ -137,9 +139,9 @@ export const Cart = () => {
             {cartItems.map((item) => (
               <div
                 key={`${item.cart_id}-${item.product_id}-${item.size}`}
-                className="grid grid-cols-6 gap-4 items-center py-2 hover:bg-gray-50 transition-colors"
+                className="flex flex-col sm:grid sm:grid-cols-6 gap-4 items-center py-2 hover:bg-gray-50 transition-colors border-b sm:border-0"
               >
-                <div className="col-span-2 flex items-center gap-4">
+                <div className="w-full sm:col-span-2 flex items-center gap-4">
                   <img
                     src={item.product.image_url}
                     alt={item.product.name}
@@ -153,13 +155,27 @@ export const Cart = () => {
                   </div>
                 </div>
 
-                <div className="text-center">{item.size}</div>
-                <div className="text-center">{item.quantity}</div>
-                <div className="text-center">
-                  {(item.product.price * item.quantity).toLocaleString("ru-RU")}{" "}
-                  ₽
+                <div className="flex justify-between w-full sm:justify-center sm:w-auto">
+                  <span className="sm:hidden">Размер:</span>
+                  <span>{item.size}</span>
                 </div>
-                <div className="text-center">
+
+                <div className="flex justify-between w-full sm:justify-center sm:w-auto">
+                  <span className="sm:hidden">Количество:</span>
+                  <span>{item.quantity}</span>
+                </div>
+
+                <div className="flex justify-between w-full sm:justify-center sm:w-auto">
+                  <span className="sm:hidden">Цена:</span>
+                  <span>
+                    {(item.product.price * item.quantity).toLocaleString(
+                      "ru-RU"
+                    )}{" "}
+                    ₽
+                  </span>
+                </div>
+
+                <div className="flex justify-end w-full sm:justify-center sm:w-auto">
                   <button
                     onClick={() => removeFromCart(item)}
                     className="text-2xl text-[#544545] hover:text-red-500 transition-colors"
@@ -176,7 +192,7 @@ export const Cart = () => {
           </div>
         )}
 
-        <div className="mt-8 px-6">
+        <div className="mt-8 px-2 sm:px-6">
           <h2 className="text-xl font-semibold mb-4">Способ доставки</h2>
 
           <fieldset className="flex flex-col gap-4">

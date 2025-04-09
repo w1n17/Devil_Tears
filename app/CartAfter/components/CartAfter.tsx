@@ -109,15 +109,15 @@ export const CartAfter = () => {
   };
 
   return (
-    <div className="flex flex-col items-center mt-14">
-      <div className="w-[500px] min-h-[500px]">
-        <h1 className="text-xl font-caveat font-semibold mb-5 text-left">
+    <div className="flex flex-col items-center mt-2 px-4 sm:px-6">
+      <div className="w-full max-w-[500px] min-h-[500px]">
+        <h1 className="text-xl sm:text-2xl font-caveat font-semibold mb-5 text-left">
           {" "}
           ПОЛУЧАТЕЛЬ
         </h1>
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col gap-5 items-center"
+          className="flex flex-col gap-5 items-center w-full"
         >
           <InputH
             title="ФИО"
@@ -162,7 +162,7 @@ export const CartAfter = () => {
           <button
             type="submit"
             disabled={loading}
-            className={`w-52 h-12 border-2 rounded-full text-xl font-alegreya mx-auto
+            className={`w-full sm:w-52 h-12 border-2 rounded-full text-xl font-alegreya mx-auto mt-4
               ${
                 loading
                   ? "bg-gray-300 cursor-not-allowed"

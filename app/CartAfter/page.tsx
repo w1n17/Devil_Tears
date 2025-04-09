@@ -2,5 +2,9 @@
 import { CartAfter } from "./components/CartAfter";
 
 export default function Page() {
-  return <CartAfter />;
+  return (
+    <div className="w-full min-h-screen">
+      <CartAfter />
+    </div>
+  );
 }

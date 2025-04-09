@@ -9,7 +9,7 @@ interface InputHProps {
 
 export const InputH = ({ title, value, onChange, maxLength }: InputHProps) => {
   return (
-    <div className="w-72">
+    <div className="w-full">
       <h1 className="text-lg text-gray-600 font-alegreya mb-1 text-left">
         {title}
       </h1>

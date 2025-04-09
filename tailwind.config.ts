@@ -28,7 +28,7 @@ export default {
       keyframes: {
         marquee: {
           '0%': { transform: 'translateX(0)' },
-          '100%': { transform: 'translateX(-1467.19)' },
+          '100%': { transform: 'translateX(-1467.19px)' },
         },
       },
     },

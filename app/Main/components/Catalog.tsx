@@ -154,23 +154,41 @@ export const Catalog = () => {
       </div>
 
       {activeCard !== null && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/50">
-          <ProductCard
-            id={activeCard}
-            name={products.find((p) => p.id === activeCard)!.name}
-            category={products.find((p) => p.id === activeCard)!.category}
-            price={
-              products
-                .find((p) => p.id === activeCard)!
-                .price.toLocaleString("ru-RU") + " ₽"
-            }
-            image_url={products.find((p) => p.id === activeCard)!.image_url}
-            description={products.find((p) => p.id === activeCard)!.description}
-            sizes={products.find((p) => p.id === activeCard)!.sizes}
-            isActive={true}
-            onClick={() => setActiveCard(null)}
-            addToCart={addToCart}
-          />
+        <div
+          className="fixed inset-0 bg-black/50 z-50"
+          onClick={() => setActiveCard(null)}
+        >
+          <div
+            className="absolute inset-0 flex items-center justify-center px-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="relative">
+              <button
+                className="absolute top-5 right-5 text-white text-3xl z-[100] w-8 h-8 rounded-full flex items-center justify-center transition-colors"
+                onClick={() => setActiveCard(null)}
+              >
+                ×
+              </button>
+              <ProductCard
+                id={activeCard}
+                name={products.find((p) => p.id === activeCard)!.name}
+                category={products.find((p) => p.id === activeCard)!.category}
+                price={
+                  products
+                    .find((p) => p.id === activeCard)!
+                    .price.toLocaleString("ru-RU") + " ₽"
+                }
+                image_url={products.find((p) => p.id === activeCard)!.image_url}
+                description={
+                  products.find((p) => p.id === activeCard)!.description
+                }
+                sizes={products.find((p) => p.id === activeCard)!.sizes}
+                isActive={true}
+                onClick={() => setActiveCard(null)}
+                addToCart={addToCart}
+              />
+            </div>
+          </div>
         </div>
       )}
     </div>

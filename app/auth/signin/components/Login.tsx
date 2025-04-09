@@ -99,21 +99,10 @@ export const Login = () => {
               />
             </div>
 
-            <div className="flex flex-row gap-3 items-center">
-              <input
-                type="checkbox"
-                id="rememberMe"
-                className="w-5 h-5 accent-black"
-              />
-              <label htmlFor="rememberMe" className="text-base font-alegreya">
-                Запомнить меня
-              </label>
-            </div>
-
             <button
               type="submit"
               className="border-2 rounded-3xl border-black w-36 h-12 font-alegreya
-                hover:bg-black hQover:text-white transition-colors duration-300"
+                hover:bg-black hover:text-white transition-colors duration-300"
             >
               Войти
             </button>

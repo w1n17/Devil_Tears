@@ -46,15 +46,15 @@ export default function AdminPage() {
   if (!isAdmin) return null;
 
   return (
-    <div className="min-h-screen bg-white p-8">
+    <div className="min-h-screen bg-white p-4 sm:p-6 md:p-8">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-5xl font-caveat text-center mb-12">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-caveat text-center mb-6 md:mb-12">
           🛠 Административная панель
         </h1>
 
         <AdminNav activeTab={activeTab} setActiveTab={setActiveTab} />
 
-        <div className="space-y-8">
+        <div className="space-y-6 md:space-y-8">
           {activeTab === "orders" && <OrdersManager />}
           {activeTab === "products" && <ProductsManager />}
         </div>

@@ -142,10 +142,10 @@ export const OrdersManager = () => {
   if (error) return <div className="p-6 text-red-600 text-xl">{error}</div>;
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-lg">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold">Управление заказами</h2>
-        <div className="relative w-64">
+    <div className="bg-white p-4 sm:p-6 rounded-lg shadow-lg">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+        <h2 className="text-xl sm:text-2xl font-bold">Управление заказами</h2>
+        <div className="relative w-full sm:w-64">
           <div className="flex items-center">
             <span className="absolute left-3 text-gray-400">#</span>
             <input
@@ -169,94 +169,130 @@ export const OrdersManager = () => {
         </div>
       </div>
 
-      <div className="overflow-x-auto">
-        <table className="w-full">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="px-4 py-3 text-left">№</th>
-              <th className="px-4 py-3 text-left">Дата</th>
-              <th className="px-4 py-3 text-left">Товары</th>
-              <th className="px-4 py-3 text-left">Клиент</th>
-              <th className="px-4 py-3 text-left">Телефон</th>
-              <th className="px-4 py-3 text-left">Адрес</th>
-              <th className="px-4 py-3 text-left">Сумма</th>
-              <th className="px-4 py-3 text-left">Статус</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredOrders.map((order) => (
-              <tr key={order.id} className="border-b hover:bg-gray-50">
-                <td className="px-4 py-3 font-medium">#{order.order_number}</td>
-                <td className="px-4 py-3">
-                  {new Date(order.created_at).toLocaleDateString("ru-RU", {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                  })}
-                </td>
-                <td className="px-4 py-3">
-                  <div className="flex flex-col gap-2">
-                    {order.order_items?.map((item, index) => (
-                      <div key={index} className="flex items-center gap-2">
-                        {item.product.image_url && (
-                          <img
-                            src={item.product.image_url}
-                            alt={item.product.name}
-                            className="w-8 h-8 object-cover rounded"
-                          />
-                        )}
-                        <div>
-                          <div className="text-sm">{item.product.name}</div>
-                          <div className="text-xs text-gray-500">
-                            {item.quantity} ×{" "}
-                            {item.price.toLocaleString("ru-RU")} ₽
+      <div className="overflow-x-auto -mx-4 sm:mx-0">
+        <div className="inline-block min-w-full align-middle">
+          <div className="overflow-hidden border rounded-lg">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-100">
+                <tr>
+                  <th className="px-2 sm:px-4 py-3 text-left text-xs sm:text-sm font-medium text-gray-500 uppercase tracking-wider">
+                    №
+                  </th>
+                  <th className="px-2 sm:px-4 py-3 text-left text-xs sm:text-sm font-medium text-gray-500 uppercase tracking-wider">
+                    Дата
+                  </th>
+                  <th className="px-2 sm:px-4 py-3 text-left text-xs sm:text-sm font-medium text-gray-500 uppercase tracking-wider">
+                    Товары
+                  </th>
+                  <th className="px-2 sm:px-4 py-3 text-left text-xs sm:text-sm font-medium text-gray-500 uppercase tracking-wider">
+                    Клиент
+                  </th>
+                  <th className="hidden md:table-cell px-2 sm:px-4 py-3 text-left text-xs sm:text-sm font-medium text-gray-500 uppercase tracking-wider">
+                    Телефон
+                  </th>
+                  <th className="hidden md:table-cell px-2 sm:px-4 py-3 text-left text-xs sm:text-sm font-medium text-gray-500 uppercase tracking-wider">
+                    Адрес
+                  </th>
+                  <th className="px-2 sm:px-4 py-3 text-left text-xs sm:text-sm font-medium text-gray-500 uppercase tracking-wider">
+                    Сумма
+                  </th>
+                  <th className="px-2 sm:px-4 py-3 text-left text-xs sm:text-sm font-medium text-gray-500 uppercase tracking-wider">
+                    Статус
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {filteredOrders.map((order) => (
+                  <tr key={order.id} className="border-b hover:bg-gray-50">
+                    <td className="px-2 sm:px-4 py-3 text-sm font-medium">
+                      #{order.order_number}
+                    </td>
+                    <td className="px-2 sm:px-4 py-3 text-sm whitespace-nowrap">
+                      {new Date(order.created_at)
+                        .toLocaleDateString("ru-RU", {
+                          day: "numeric",
+                          month: "long",
+                          year: "numeric",
+                        })
+                        .replace(" г.", "")}
+                    </td>
+                    <td className="px-2 sm:px-4 py-3 text-sm">
+                      <div className="flex flex-col gap-2 max-w-[100px] sm:max-w-[150px] md:max-w-none">
+                        {order.order_items?.map((item, index) => (
+                          <div key={index} className="flex items-center gap-2">
+                            {item.product.image_url && (
+                              <img
+                                src={item.product.image_url}
+                                alt={item.product.name}
+                                className="w-8 h-8 object-cover rounded flex-shrink-0"
+                              />
+                            )}
+                            <div className="min-w-0 flex-1 overflow-hidden">
+                              <div className="text-sm truncate max-w-full">
+                                {item.product.name}
+                              </div>
+                              <div className="text-xs text-gray-500 whitespace-nowrap overflow-hidden text-ellipsis">
+                                {item.quantity} ×{" "}
+                                {item.price.toLocaleString("ru-RU")} ₽
+                              </div>
+                            </div>
                           </div>
-                        </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
-                </td>
-                <td className="px-4 py-3">
-                  <div className="font-medium">{order.full_name}</div>
-                  <div className="text-sm text-gray-500">{order.country}</div>
-                </td>
-                <td className="px-4 py-3">{order.phone}</td>
-                <td className="px-4 py-3">
-                  <div>{order.address}</div>
-                  <div className="text-gray-500">{order.postal_code}</div>
-                </td>
-                <td className="px-4 py-3">
-                  {order.total_price.toLocaleString("ru-RU")} ₽
-                </td>
-                <td className="px-4 py-3">
-                  <select
-                    value={order.status}
-                    onChange={(e) =>
-                      updateOrderStatus(
-                        order.id,
-                        e.target.value as Order["status"]
-                      )
-                    }
-                    className={`px-3 py-1 rounded-full border ${
-                      order.status === "доставлен"
-                        ? "bg-green-100 border-green-600"
-                        : order.status === "отправлен"
-                        ? "bg-blue-100 border-blue-600"
-                        : order.status === "отменен"
-                        ? "bg-red-100 border-red-600"
-                        : "bg-gray-100 border-gray-300"
-                    }`}
-                  >
-                    <option value="в обработке">В обработке</option>
-                    <option value="отправлен">Отправлен</option>
-                    <option value="доставлен">Доставлен</option>
-                    <option value="отменен">Отменён</option>
-                  </select>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                    </td>
+                    <td className="px-2 sm:px-4 py-3 text-sm">
+                      <div className="font-medium truncate max-w-[80px] sm:max-w-[120px] md:max-w-none">
+                        {order.full_name}
+                      </div>
+                      <div className="text-xs text-gray-500 truncate">
+                        {order.country}
+                      </div>
+                    </td>
+                    <td className="hidden md:table-cell px-2 sm:px-4 py-3 text-sm">
+                      {order.phone}
+                    </td>
+                    <td className="hidden md:table-cell px-2 sm:px-4 py-3 text-sm">
+                      <div className="truncate max-w-[120px] lg:max-w-none">
+                        {order.address}
+                      </div>
+                      <div className="text-xs text-gray-500">
+                        {order.postal_code}
+                      </div>
+                    </td>
+                    <td className="px-2 sm:px-4 py-3 text-sm whitespace-nowrap">
+                      {order.total_price.toLocaleString("ru-RU")} ₽
+                    </td>
+                    <td className="px-2 sm:px-4 py-3 text-sm">
+                      <select
+                        value={order.status}
+                        onChange={(e) =>
+                          updateOrderStatus(
+                            order.id,
+                            e.target.value as Order["status"]
+                          )
+                        }
+                        className={`px-1 sm:px-3 py-1 text-xs sm:text-sm rounded-full border w-full max-w-[90px] ${
+                          order.status === "доставлен"
+                            ? "bg-green-100 border-green-600"
+                            : order.status === "отправлен"
+                            ? "bg-blue-100 border-blue-600"
+                            : order.status === "отменен"
+                            ? "bg-red-100 border-red-600"
+                            : "bg-gray-100 border-gray-300"
+                        }`}
+                      >
+                        <option value="в обработке">В обработке</option>
+                        <option value="отправлен">Отправлен</option>
+                        <option value="доставлен">Доставлен</option>
+                        <option value="отменен">Отменен</option>
+                      </select>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
 
       {!loading && (

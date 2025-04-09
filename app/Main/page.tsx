@@ -5,12 +5,14 @@ import React from "react";
 
 export default function page() {
   return (
-    <div className="overflow-x-hidden">
+    <div className="overflow-hidden">
       <main>
         <InterfaceUI>
-          <Slider />
-          <Image />
-          <Slider />
+          <div className="w-full">
+            <Slider />
+            <Image />
+            <Slider />
+          </div>
         </InterfaceUI>
         <Catalog />
         <Photo />

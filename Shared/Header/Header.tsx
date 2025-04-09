@@ -196,7 +196,7 @@ export default function Header() {
   };
 
   return (
-    <div className="fixed top-0 left-0 w-full flex flex-row justify-between items-center h-12 bg-[#BFBFBF] z-50">
+    <div className="fixed top-0 left-0 w-full flex flex-row items-center h-12 bg-[#BFBFBF] z-50 px-2">
       <motion.div
         whileHover={{ scale: 1.05 }}
         className="px-4 sm:px-10"
@@ -205,19 +205,19 @@ export default function Header() {
         <Button image="/images/header/Heart.png" />
       </motion.div>
 
-      <Link href="/Main">
+      <Link href="/Main" className="flex-1 flex justify-center">
         <motion.h1
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="absolute top-1 left-1/2 transform -translate-x-1/2 text-xl sm:text-3xl text-transparent bg-clip-text bg-gradient-to-tr from-[#544545] to-[#B84747] font-jaro"
+          className="text-xl sm:text-3xl text-transparent bg-clip-text bg-gradient-to-tr from-[#544545] to-[#B84747] font-jaro"
         >
           Devil Tears
         </motion.h1>
       </Link>
 
-      <div className="flex flex-row gap-4 sm:gap-8 mr-4 sm:mr-8 items-center">
+      <div className="flex flex-row items-center gap-3 sm:gap-5 px-4 sm:px-10">
         {isAdmin && (
-          <motion.div whileHover={{ scale: 1.1 }} className="hidden sm:block">
+          <motion.div whileHover={{ scale: 1.1 }}>
             <Link href="/admin">
               <Button image="/images/header/admin.png" />
             </Link>
@@ -233,7 +233,6 @@ export default function Header() {
         <a
           href={user ? "/profile" : "/auth/signin"}
           onClick={handleProfileClick}
-          className="hidden sm:block"
         >
           {user ? (
             <motion.img

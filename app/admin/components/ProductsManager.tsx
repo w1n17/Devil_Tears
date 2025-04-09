@@ -225,22 +225,22 @@ export const ProductsManager = () => {
     );
 
   return (
-    <div className="min-h-screen p-8">
+    <div className="min-h-screen p-2 sm:p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-5xl font-caveat text-center mb-12">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-caveat text-center mb-6 md:mb-8">
           🛠 Управление товарами
         </h1>
 
-        <div className="bg-[#f5f5f5] p-6 rounded-3xl border-2 border-black mb-12">
-          <h2 className="font-caveat text-3xl mb-6">
+        <div className="bg-[#f5f5f5] p-4 sm:p-6 rounded-3xl border-2 border-black mb-8 md:mb-12">
+          <h2 className="font-caveat text-2xl sm:text-3xl mb-4 sm:mb-6">
             {editingId ? "✎ Редактирование товара" : "＋ Добавить новый товар"}
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             <input
               type="text"
               placeholder="Название товара"
-              className="p-4 border-2 border-black rounded-3xl font-alegreya"
+              className="p-3 sm:p-4 border-2 border-black rounded-3xl font-alegreya text-sm sm:text-base"
               value={newProduct.name}
               onChange={(e) =>
                 setNewProduct((p) => ({ ...p, name: e.target.value }))
@@ -249,100 +249,147 @@ export const ProductsManager = () => {
 
             <input
               type="number"
-              placeholder="Цена"
-              className="p-4 border-2 border-black rounded-3xl font-alegreya"
+              placeholder="Цена в рублях"
+              className="p-3 sm:p-4 border-2 border-black rounded-3xl font-alegreya text-sm sm:text-base"
               value={newProduct.price || ""}
               onChange={(e) =>
-                setNewProduct((p) => ({ ...p, price: +e.target.value }))
+                setNewProduct((p) => ({
+                  ...p,
+                  price: Number(e.target.value),
+                }))
               }
             />
 
-            <div className="space-y-2">
-              <label className="font-alegreya">Изображение:</label>
-              <input
-                type="file"
-                accept="image/*"
+            <div className="md:col-span-2">
+              <textarea
+                placeholder="Описание товара"
+                className="w-full p-3 sm:p-4 border-2 border-black rounded-3xl font-alegreya text-sm sm:text-base h-24 sm:h-32"
+                value={newProduct.description}
                 onChange={(e) =>
-                  e.target.files?.[0] && uploadImage(e.target.files[0])
+                  setNewProduct((p) => ({
+                    ...p,
+                    description: e.target.value,
+                  }))
                 }
-                className="p-4 border-2 border-black rounded-3xl w-full"
-                disabled={uploading}
               />
-              {uploading && (
-                <p className="text-sm text-gray-500">Загрузка изображения...</p>
+            </div>
+
+            <div className="md:col-span-2 flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+              <div className="w-full sm:w-auto">
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  id="image-upload"
+                  onChange={(e) => {
+                    if (e.target.files && e.target.files[0]) {
+                      uploadImage(e.target.files[0]);
+                    }
+                  }}
+                />
+                <label
+                  htmlFor="image-upload"
+                  className="cursor-pointer flex items-center gap-2 p-3 sm:p-4 border-2 border-black rounded-3xl font-alegreya bg-white hover:bg-gray-100 transition-colors text-sm sm:text-base"
+                >
+                  🖼️ {uploading ? "Загрузка..." : "Загрузить изображение"}
+                </label>
+              </div>
+
+              {newProduct.image_url && (
+                <div className="relative">
+                  <img
+                    src={newProduct.image_url}
+                    alt="Preview"
+                    className="w-24 h-24 object-cover rounded-lg"
+                  />
+                  <button
+                    onClick={() =>
+                      setNewProduct((p) => ({ ...p, image_url: "" }))
+                    }
+                    className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center"
+                  >
+                    ×
+                  </button>
+                </div>
               )}
             </div>
 
             <input
               type="text"
-              placeholder="Категория"
-              className="p-4 border-2 border-black rounded-3xl font-alegreya"
+              placeholder="Категория товара"
+              className="p-3 sm:p-4 border-2 border-black rounded-3xl font-alegreya text-sm sm:text-base"
               value={newProduct.category}
               onChange={(e) =>
                 setNewProduct((p) => ({ ...p, category: e.target.value }))
               }
             />
 
-            <div className="space-y-2">
-              <label className="font-alegreya">Размеры (через запятую):</label>
-              <input
-                type="text"
-                placeholder="S, M, L, XL"
-                className="p-4 border-2 border-black rounded-3xl w-full"
-                value={newProduct.sizes.join(", ")}
-                onChange={(e) =>
-                  setNewProduct((p) => ({
-                    ...p,
-                    sizes: e.target.value.split(",").map((s) => s.trim()),
-                  }))
-                }
-              />
+            <div>
+              <div className="text-base font-caveat mb-2">Размеры:</div>
+              <div className="flex flex-wrap gap-2">
+                {["XS", "S", "M", "L", "XL", "XXL"].map((size) => (
+                  <button
+                    key={size}
+                    type="button"
+                    onClick={() => {
+                      const isSelected = newProduct.sizes.includes(size);
+                      setNewProduct((p) => ({
+                        ...p,
+                        sizes: isSelected
+                          ? p.sizes.filter((s) => s !== size)
+                          : [...p.sizes, size],
+                      }));
+                    }}
+                    className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-colors ${
+                      newProduct.sizes.includes(size)
+                        ? "bg-gradient-to-br from-[#544545] to-[#B84747] text-white"
+                        : "bg-white border-2 border-black"
+                    }`}
+                  >
+                    {size}
+                  </button>
+                ))}
+              </div>
             </div>
 
-            <textarea
-              placeholder="Описание товара"
-              className="p-4 border-2 border-black rounded-3xl h-32 font-alegreya"
-              value={newProduct.description}
-              onChange={(e) =>
-                setNewProduct((p) => ({ ...p, description: e.target.value }))
-              }
-            />
-
-            <div className="flex gap-4 items-center">
-              <button
-                onClick={handleSaveProduct}
-                disabled={uploading}
-                className={`px-6 py-3 border-2 rounded-3xl font-alegreya transition-all
-                  ${
-                    editingId
-                      ? "bg-green-100 border-green-600 hover:bg-green-600 hover:text-white"
-                      : "bg-white border-black hover:bg-black hover:text-white"
-                  }`}
-              >
-                {uploading
-                  ? "Загрузка..."
-                  : editingId
-                  ? "Сохранить"
-                  : "Добавить"}
-              </button>
-
+            <div className="md:col-span-2 flex justify-center gap-4 mt-4">
               {editingId && (
                 <button
                   onClick={cancelEditing}
-                  className="px-6 py-3 border-2 border-red-600 rounded-3xl
-                           bg-red-100 hover:bg-red-600 hover:text-white"
+                  className="px-6 py-2 sm:py-3 bg-gray-200 hover:bg-gray-300 rounded-full font-caveat text-lg sm:text-xl transition-colors"
                 >
-                  Отмена
+                  Отменить
                 </button>
               )}
+              <button
+                onClick={handleSaveProduct}
+                disabled={!newProduct.name || !newProduct.image_url}
+                className={`px-6 py-2 sm:py-3 rounded-full font-caveat text-lg sm:text-xl transition-colors ${
+                  !newProduct.name || !newProduct.image_url
+                    ? "bg-gray-200 cursor-not-allowed"
+                    : "bg-gradient-to-br from-[#544545] to-[#B84747] text-white hover:opacity-90"
+                }`}
+              >
+                {editingId ? "Сохранить изменения" : "Добавить товар"}
+              </button>
             </div>
           </div>
         </div>
 
-        <div className="flex flex-wrap justify-center">
+        <h3 className="text-2xl sm:text-3xl font-caveat mb-4 sm:mb-6">
+          Каталог товаров
+        </h3>
+
+        <div className="flex flex-wrap justify-center sm:justify-start gap-4">
           {products.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
+
+          {products.length === 0 && (
+            <div className="w-full text-center py-8 text-gray-500 font-alegreya">
+              Пока нет товаров в каталоге
+            </div>
+          )}
         </div>
       </div>
     </div>
